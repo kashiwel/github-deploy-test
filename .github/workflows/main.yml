@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: echo job1
+  job2:
+    runs-on: ubuntu-latest
+    environment: 'staging'
+    needs: [job1]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: echo job2
+  job3:
+    runs-on: ubuntu-latest
+    environment: 'production'
+    needs: [job2]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: echo job3
